@@ -246,6 +246,16 @@ export function RecycleBinView({
                 placeholder={t("All types")}
               />
             </div>
+            <button
+              type="button"
+              onClick={onRetry}
+              disabled={isLoading}
+              title={t("Refresh")}
+              aria-label={t("Refresh")}
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 outline-none transition hover:border-slate-300 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:ring-offset-slate-900"
+            >
+              <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
+            </button>
             {entries.length > 0 && (
               <button
                 type="button"

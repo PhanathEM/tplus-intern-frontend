@@ -67,26 +67,38 @@ export function UnassignView({
             )}
           </div>
 
-          <div className="relative w-80">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" size={14} />
-            <input
-              type="text"
-              autoComplete="off"
-              value={search}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder={t("Owner / Equipment / Asset Code")}
-              className="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pl-9 pr-9 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:bg-white dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-100 dark:placeholder:text-slate-500"
-            />
-            {search && (
-              <button
-                type="button"
-                onClick={() => onSearchChange("")}
-                aria-label={t("Clear search")}
-                className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-slate-400 outline-none transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-700 dark:hover:text-slate-200"
-              >
-                <X size={13} className="block" />
-              </button>
-            )}
+          <div className="flex items-center gap-2">
+            <div className="relative w-80">
+              <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" size={14} />
+              <input
+                type="text"
+                autoComplete="off"
+                value={search}
+                onChange={(e) => onSearchChange(e.target.value)}
+                placeholder={t("Owner / Equipment / Asset Code")}
+                className="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pl-9 pr-9 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:bg-white dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-100 dark:placeholder:text-slate-500"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => onSearchChange("")}
+                  aria-label={t("Clear search")}
+                  className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-slate-400 outline-none transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+                >
+                  <X size={13} className="block" />
+                </button>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={onRetry}
+              disabled={isLoading}
+              title={t("Refresh")}
+              aria-label={t("Refresh")}
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 outline-none transition hover:border-slate-300 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:ring-offset-slate-900"
+            >
+              <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
+            </button>
           </div>
         </div>
 

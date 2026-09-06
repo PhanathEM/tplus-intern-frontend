@@ -21,5 +21,12 @@ export function useActivityLog() {
     setFilters((current) => ({ ...current, [key]: value }));
   }
 
-  return { entries, filters, filteredEntries, handleFilterChange };
+  // The log lives in localStorage and this hook already subscribes to its
+  // change event, so refreshing is just a re-read - it picks up entries another
+  // tab wrote while the storage event was missed.
+  function handleRefresh() {
+    setEntries(getActivityLog());
+  }
+
+  return { entries, filters, filteredEntries, handleFilterChange, handleRefresh };
 }

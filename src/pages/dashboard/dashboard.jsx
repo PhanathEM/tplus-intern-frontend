@@ -1159,6 +1159,7 @@ function Dashboard({ user, onLogout, theme, onToggleTheme, language, onToggleLan
                 totalCount: activityLog.entries.length,
                 filters: activityLog.filters,
                 onFilterChange: activityLog.handleFilterChange,
+                onRefresh: activityLog.handleRefresh,
                 moduleOptions: ACTIVITY_MODULE_VALUES,
                 actionOptions: ACTIVITY_ACTION_VALUES,
               }}

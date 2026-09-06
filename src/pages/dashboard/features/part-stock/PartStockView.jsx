@@ -656,6 +656,17 @@ export function PartStockView({
           onRetry={onRetry}
           hideRefresh
           headerActions={
+            <>
+            <button
+              type="button"
+              onClick={onRetry}
+              disabled={isLoading}
+              title={t("Refresh")}
+              aria-label={t("Refresh")}
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 outline-none transition hover:border-slate-300 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:ring-offset-slate-900"
+            >
+              <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
+            </button>
             <button
               type="button"
               onClick={() =>
@@ -668,6 +679,7 @@ export function PartStockView({
               <PlusCircle size={15} />
               <RollingText text={t("new_part_button", { name: selectedPartType.part_name })} />
             </button>
+            </>
           }
           renderRowActions={(record) => (
             <div className="flex items-center justify-end gap-1">
@@ -756,16 +768,28 @@ export function PartTypeManagementView({
               </p>
             )}
           </div>
-          {canManage && (
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={onAddPartType}
-              className="group/roll inline-flex h-9 items-center gap-1.5 rounded-lg bg-[#fddd1c] px-3.5 text-[13px] font-semibold text-slate-900 outline-none transition hover:bg-[#e5c518] focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-[#fddd1c] dark:text-slate-900 dark:hover:bg-[#e5c518] dark:focus-visible:ring-offset-slate-900"
+              onClick={onRetry}
+              disabled={isLoading}
+              title={t("Refresh")}
+              aria-label={t("Refresh")}
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 outline-none transition hover:border-slate-300 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:ring-offset-slate-900"
             >
-              <PlusCircle size={15} />
-              <RollingText text={t("New Part")} />
+              <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
             </button>
-          )}
+            {canManage && (
+              <button
+                type="button"
+                onClick={onAddPartType}
+                className="group/roll inline-flex h-9 items-center gap-1.5 rounded-lg bg-[#fddd1c] px-3.5 text-[13px] font-semibold text-slate-900 outline-none transition hover:bg-[#e5c518] focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-[#fddd1c] dark:text-slate-900 dark:hover:bg-[#e5c518] dark:focus-visible:ring-offset-slate-900"
+              >
+                <PlusCircle size={15} />
+                <RollingText text={t("New Part")} />
+              </button>
+            )}
+          </div>
         </div>
 
         {isLoading ? (
