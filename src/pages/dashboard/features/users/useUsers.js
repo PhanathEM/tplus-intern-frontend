@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { deleteUser, fetchUsers, resetUserPassword, updateUser } from "../../../../services/userService";
+import { getStoredCredentials, setStoredCredentials } from "../../../../lib/apiClient";
 import { ACTIVITY_MODULES, logActivity } from "../../../../lib/activityLog";
 import {
   mergeStoredPermissionsForUser,
@@ -15,7 +16,7 @@ export function useUsers({ isActive, user }) {
   const [error, setError] = useState(null);
   const [fetchToken, setFetchToken] = useState(0);
   const [permissionsTarget, setPermissionsTarget] = useState(null);
-  const [permissionValues, setPermissionValues] = useState({ full_name: "", email: "", permissions: [] });
+  const [permissionValues, setPermissionValues] = useState({ username: "", email: "", permissions: [] });
   const [isSavingPermissions, setIsSavingPermissions] = useState(false);
   const [permissionsError, setPermissionsError] = useState(null);
   const [resetPasswordTarget, setResetPasswordTarget] = useState(null);
@@ -85,7 +86,7 @@ export function useUsers({ isActive, user }) {
   function handleOpenEditPermissions(targetUser) {
     setPermissionsTarget(targetUser);
     setPermissionValues({
-      full_name: targetUser.full_name || "",
+      username: targetUser.username || "",
       email: targetUser.email || "",
       permissions: normalizeUserPermissions(targetUser),
     });
@@ -105,13 +106,16 @@ export function useUsers({ isActive, user }) {
 
     const permissions = normalizeUserPermissions({ permissions: permissionValues.permissions });
     const payload = {
-      full_name: permissionValues.full_name.trim(),
+      username: permissionValues.username.trim(),
       email: permissionValues.email.trim(),
       permissions,
       role: permissionsToRole(permissions),
     };
+    // Retried without `permissions` if the backend rejects that key (see the
+    // 400/422 catch below). `username` stays in - dropping it here would let
+    // a rename silently no-op on the retry.
     const legacyPayload = {
-      full_name: payload.full_name,
+      username: payload.username,
       email: payload.email,
       role: payload.role,
     };
@@ -130,10 +134,20 @@ export function useUsers({ isActive, user }) {
           action: "update",
           module: ACTIVITY_MODULES.USER,
           entityId: permissionsTarget.user_id,
-          entityLabel: permissionsTarget.username || payload.full_name,
+          entityLabel: payload.username || permissionsTarget.username,
           before: permissionsTarget,
           after: { ...permissionsTarget, ...payload },
         });
+        // Every request carries username+password as query params
+        // (apiClient.js), so renaming the account you are signed in as
+        // leaves the stored pair pointing at a username that no longer
+        // exists - every following request would 401. Re-point it at the new
+        // name, matching on the stored username rather than an id so it only
+        // ever touches the credentials actually in use.
+        const stored = getStoredCredentials();
+        if (stored?.username && stored.username === permissionsTarget.username && payload.username) {
+          setStoredCredentials(payload.username, stored.password);
+        }
         rememberUserPermissions(permissionsTarget, permissions);
         setPermissionsTarget(null);
         handleRetry();

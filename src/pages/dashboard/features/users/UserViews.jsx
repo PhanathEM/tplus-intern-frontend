@@ -249,13 +249,13 @@ export function UserPermissionsModal({ isOpen, user, values, onChange, onSubmit,
               </div>
             )}
             <div className="grid gap-4">
-              <FormField label={t("Full Name")} htmlFor="user-full_name">
+              <FormField label={t("Username")} htmlFor="user-username">
                 <input
-                  id="user-full_name"
+                  id="user-username"
                   type="text"
                   autoComplete="off"
-                  value={values.full_name}
-                  onChange={(e) => onChange("full_name", e.target.value)}
+                  value={values.username}
+                  onChange={(e) => onChange("username", e.target.value)}
                   className={formInputClass}
                   disabled={isSubmitting}
                 />
