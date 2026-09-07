@@ -58,7 +58,7 @@ function getResultLabel(type, item) {
       `Equipment #${item.equipment_id}`
     );
   }
-  if (type === "users") return item.full_name || item.username || "User";
+  if (type === "users") return item.username || "User";
   return "";
 }
 

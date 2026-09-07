@@ -74,7 +74,7 @@ export function useUsers({ isActive, user }) {
           action: "approve",
           module: ACTIVITY_MODULES.USER,
           entityId: targetUser.user_id,
-          entityLabel: targetUser.full_name || targetUser.username,
+          entityLabel: targetUser.username,
           before: targetUser,
           after: { ...targetUser, is_active: true },
         });
@@ -185,7 +185,7 @@ export function useUsers({ isActive, user }) {
           action: "reset_password",
           module: ACTIVITY_MODULES.USER,
           entityId: resetPasswordTarget.user_id,
-          entityLabel: resetPasswordTarget.username || resetPasswordTarget.full_name,
+          entityLabel: resetPasswordTarget.username,
         });
         setResetPasswordTarget(null);
       })
@@ -216,7 +216,7 @@ export function useUsers({ isActive, user }) {
           action: "delete",
           module: ACTIVITY_MODULES.USER,
           entityId: userToDelete.user_id,
-          entityLabel: userToDelete.username || userToDelete.full_name,
+          entityLabel: userToDelete.username,
           before: userToDelete,
         });
         setUserToDelete(null);

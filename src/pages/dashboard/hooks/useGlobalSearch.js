@@ -96,7 +96,7 @@ export function useGlobalSearch({ user, onSelectView, onSelectEquipmentCategory 
                 key: "users",
                 items: (Array.isArray(list) ? list : [])
                   .filter((candidate) =>
-                    `${candidate.full_name || ""} ${candidate.username || ""}`.toLowerCase().includes(lowerTerm)
+                    `${candidate.username || ""}`.toLowerCase().includes(lowerTerm)
                   )
                   .slice(0, 5),
               };

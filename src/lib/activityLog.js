@@ -61,7 +61,7 @@ function writeLog(entries) {
 function getActorInfo(actor) {
   return {
     actorId: actor?.user_id ?? actor?.id ?? null,
-    actorName: actor?.full_name || actor?.username || "Unknown user",
+    actorName: actor?.username || "Unknown user",
     actorRole: actor?.role || null,
   };
 }

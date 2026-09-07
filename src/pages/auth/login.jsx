@@ -138,11 +138,10 @@ export default function Login({ onLogin, theme, onToggleTheme }) {
         setIsRegisterSubmitting(true);
 
         try {
-            // No separate "Full Name" field anymore — the username doubles
-            // as the display name; an admin can still rename the account
-            // later from the Users page.
+            // The username is the display name — api_user has no full_name
+            // column. An admin can still rename the account later from the
+            // Users page.
             await signup({
-                fullName: regUsername.trim(),
                 username: regUsername.trim(),
                 email: regEmail.trim(),
                 password: regPassword,
@@ -192,7 +191,7 @@ export default function Login({ onLogin, theme, onToggleTheme }) {
             onLogin({
                 user: {
                     ...response?.user,
-                    name: response?.user?.full_name || response?.user?.username || email.trim(),
+                    name: response?.user?.username || email.trim(),
                     rememberDevice,
                 },
             });

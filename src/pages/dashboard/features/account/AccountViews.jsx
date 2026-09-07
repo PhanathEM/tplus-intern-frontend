@@ -16,7 +16,7 @@ export function ProfileModal({ isOpen, profile, isLoading, error, accessLabel, o
 
   if (!isOpen) return null;
 
-  const displayName = profile?.full_name || profile?.name || profile?.username || "—";
+  const displayName = profile?.username || profile?.name || "—";
   const initials = displayName
     .split(" ")
     .filter(Boolean)

@@ -19,7 +19,7 @@ export function useAccount({ user }) {
 
     fetchCurrentUser()
       .then((data) => setProfile(data))
-      // The cached login-time user still has username/full_name/role even
+      // The cached login-time user still has username/role even
       // if this fresh fetch fails, so the panel still shows something
       // rather than an empty error state.
       .catch((error) => {

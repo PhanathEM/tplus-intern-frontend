@@ -5,20 +5,20 @@ export function login(username, password) {
 }
 
 // Fresh copy of the logged-in user's own record (user_id, username,
-// full_name, role) — used by the "View profile" panel so it doesn't rely
+// role) — used by the "View profile" panel so it doesn't rely
 // solely on whatever was cached in local state at login time.
 export function fetchCurrentUser() {
   return apiGet("/api/auth/me");
 }
 
 // email is accepted by the endpoint (no error), but the 201 response never
-// echoes it back the way it does username/full_name/role — a strong signal
+// echoes it back the way it does username/role — a strong signal
 // backend isn't storing it yet. Sending it anyway so accounts are ready to
 // have a real email on file the moment backend does persist it.
-export function signup({ fullName, username, email, password }) {
+export function signup({ username, email, password }) {
   return apiPost(
     "/api/auth/signup",
-    { full_name: fullName, username, email, password },
+    { username, email, password },
     { skipCredentials: true }
   );
 }
